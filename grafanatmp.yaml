@@ -1,0 +1,89 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  annotations:
+    openshift.io/generated-by: OpenShiftNewApp
+  creationTimestamp: '2018-03-01T09:46:02Z'
+  generation: 2
+  labels:
+    app: grafana
+  name: grafana
+  namespace: myproject
+  resourceVersion: '6681'
+  selfLink: /apis/apps.openshift.io/v1/namespaces/myproject/deploymentconfigs/grafana
+  uid: 5a8f7033-1d35-11e8-97cc-448a5b997f0b
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentconfig: grafana
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        openshift.io/generated-by: OpenShiftNewApp
+      creationTimestamp: null
+      labels:
+        app: grafana
+        deploymentconfig: grafana
+    spec:
+      containers:
+        - env:
+            - name: GF_INSTALL_PLUGINS
+              value: hawkular-datasource
+            - name: DATAD
+              value: /usr/share/grafana/data
+            - name: PLGND
+              value: /usr/share/grafana/data/plugins
+          image: 'registry.hub.docker.com/grafana/grafana:latest'
+          imagePullPolicy: Always
+          name: grafana
+          ports:
+            - containerPort: 3000
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /usr/share/grafana/data
+              name: data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: conf
+  test: false
+  triggers:
+    - type: ConfigChange
+status:
+  availableReplicas: 0
+  conditions:
+    - lastTransitionTime: '2018-03-01T09:46:03Z'
+      lastUpdateTime: '2018-03-01T09:46:03Z'
+      message: Deployment config does not have minimum availability.
+      status: 'False'
+      type: Available
+    - lastTransitionTime: '2018-03-01T09:55:24Z'
+      lastUpdateTime: '2018-03-01T09:55:24Z'
+      message: replication controller "grafana-1" is progressing
+      reason: ReplicationControllerUpdated
+      status: 'True'
+      type: Progressing
+  details:
+    causes:
+      - type: ConfigChange
+    message: config change
+  latestVersion: 1
+  observedGeneration: 2
+  replicas: 1
+  unavailableReplicas: 1
+  updatedReplicas: 1

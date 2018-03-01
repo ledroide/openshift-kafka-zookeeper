@@ -32,7 +32,7 @@ minishift version
 
 * edit the /etc/docker/daemon.json file and add the following :
 
-```bash
+```json
 {
    "insecure-registries": [
      "172.30.0.0/16"
@@ -52,7 +52,7 @@ minishift version
 
 ## kafka and zookeeper as stateful sets
 
-info :forked from https://github.com/strimzi/strimzi/blob/0.1.0/kafka-statefulsets/resources/openshift-template.yaml
+> forked from https://github.com/strimzi/strimzi/blob/0.1.0/kafka-statefulsets/resources/openshift-template.yaml
 
 * add the kafka+zookeeper (named _kafka-zk_ including 3 instances for each component) template to openshift : `oc apply -f openshift-kafka-zk-template.yaml`
 * run a new app based on this template : `oc new-app kafka-zk`
@@ -60,7 +60,7 @@ info :forked from https://github.com/strimzi/strimzi/blob/0.1.0/kafka-statefulse
 
 ## prometheus service collecting kafka metrics
 
-info :forked from https://github.com/strimzi/strimzi/blob/0.1.0/metrics/prometheus/openshift-template.yaml 
+> forked from https://github.com/strimzi/strimzi/blob/0.1.0/metrics/prometheus/openshift-template.yaml 
 
 * create a prometheus-server _service account_ resource :
 
@@ -70,22 +70,31 @@ oc create sa prometheus-server
 oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:${NAMESPACE}:prometheus-server
 ```
 
-* add the prometheus template to openshift : `oc apply -f openshift-prometheus-template.yaml`
+* add prometheus template to openshift : `oc apply -f openshift-prometheus-template.yaml`
 * run a new app based on this template : `oc new-app prometheus`
 * in order to access prometheus WebUI dashboard : `oc expose svc/prometheus`
 * further documentation on https://github.com/strimzi/strimzi/blob/0.1.0/metrics/METRICS.md 
 
 ## grafana connection to prometheus
 
-info : forked from https://github.com/OpenShiftDemos/grafana-openshift
+> forked from https://github.com/OpenShiftDemos/grafana-openshift
 
-* add the prometheus template to openshift : `oc apply -f openshift-grafana-template.yaml`
+* add the grafana template to openshift : `oc apply -f openshift-grafana-template.yaml`
 * run a new app based on this template : `oc new-app grafana`
+
+## yahoo kafka manager
+
+> based on https://github.com/yahoo/kafka-manager
+> forked from https://github.com/Yolean/kubernetes-kafka/tree/master/yahoo-kafka-manager
+
+* add prometheus template to openshift : `oc apply --dry-run --validate -f openshift-kafka-manager-template.yaml`
+* \(not working yet)
 
 ## todo
 
-* expose a route automatically from prometheus template
-* include kafka-manager for high-level monitoring 
+* [ ] expose a route automatically from prometheus template
+* [ ] include kafka-manager for high-level monitoring
+* [ ] kafka : add a swtich for EmptyDir volume option
 
 ## links
 

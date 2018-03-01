@@ -99,3 +99,19 @@ oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:${NA
 ## links
 
 * [Kubernetes 1.7 API reference](https://v1-7.docs.kubernetes.io/docs/api-reference/v1.7/) for OpenShift 3.7 Blueprints
+* [Mardown syntax help](https://help.github.com/articles/basic-writing-and-formatting-syntax)
+
+## notes
+
+```
+oc apply --dry-run --validate -f openshift-kafka-zk-template.yaml
+error: error validating "openshift-kafka-zk-template.yaml": error validating data: couldn't find type: v1.Template; if you choose to ignore these errors, turn validation off with --validate=false
+```
+
+```
+oc new-app kafka-manager
+error: Errors occurred while determining argument types:
+kafka-manager as a local directory pointing to a Git repository:  stat kafka-manager: no such file or directory
+Errors occurred during resource creation:
+error: error processing template "myproject/kafka-manager": only encoded map or array can be decoded into a struct
+```

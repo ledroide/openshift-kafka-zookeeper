@@ -84,8 +84,8 @@ oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:${NA
 
 ## yahoo kafka manager
 
-> based on https://github.com/yahoo/kafka-manager
-> forked from https://github.com/Yolean/kubernetes-kafka/tree/master/yahoo-kafka-manager
+> * based on https://github.com/yahoo/kafka-manager
+> * forked from https://github.com/Yolean/kubernetes-kafka/tree/master/yahoo-kafka-manager
 
 * add prometheus template to openshift : `oc apply --dry-run --validate -f openshift-kafka-manager-template.yaml`
 * \(not working yet)

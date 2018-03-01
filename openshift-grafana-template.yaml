@@ -25,7 +25,7 @@ parameters:
   displayName: Data directory
   description: Path to Grafana data directory
   required: true
-  value: /usr/share/grafana/data
+  value: /var
 objects:
 - apiVersion: v1
   kind: Service
@@ -87,29 +87,35 @@ objects:
           ports:
           - containerPort: 3000
             protocol: TCP
-          resources: {}
+          resources:
+            limits:
+              cpu: 100m
+              memory: 100Mi
+            requests:
+              cpu: 100m
+              memory: 100Mi
           terminationMessagePath: /dev/termination-log
           terminationMessagePolicy: File
-          volumeMounts:
-          - mountPath: ${DATA_DIR}
-            name: data
+          # volumeMounts:
+          # - mountPath: ${DATA_DIR}
+          #   name: data
         dnsPolicy: ClusterFirst
         restartPolicy: Always
         schedulerName: default-scheduler
         securityContext: {}
         terminationGracePeriodSeconds: 30
-        volumes:
-        - name: data
-          persistentVolumeClaim:
-            claimName: conf
+        # volumes:
+        # - name: data
+        #   persistentVolumeClaim:
+        #     claimName: conf
     test: false
     triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-        - grafana
-        from:
-          kind: ImageStreamTag
-          name: grafana:latest
-      type: ImageChange
+    # - imageChangeParams:
+    #     automatic: true
+    #     containerNames:
+    #     - grafana
+    #     from:
+    #       kind: ImageStreamTag
+    #       name: grafana:latest
+    #   type: ImageChange
     - type: ConfigChange

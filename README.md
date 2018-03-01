@@ -53,6 +53,7 @@ minishift version
 ## kafka and zookeeper as stateful sets
 
 info :forked from https://github.com/strimzi/strimzi/blob/0.1.0/kafka-statefulsets/resources/openshift-template.yaml
+
 * add the kafka+zookeeper (named _kafka-zk_ including 3 instances for each component) template to openshift : `oc apply -f openshift-kafka-zk-template.yaml`
 * run a new app based on this template : `oc new-app kafka-zk`
 * wait for everything running : `watch oc get all`
@@ -60,6 +61,7 @@ info :forked from https://github.com/strimzi/strimzi/blob/0.1.0/kafka-statefulse
 ## prometheus service collecting kafka metrics
 
 info :forked from https://github.com/strimzi/strimzi/blob/0.1.0/metrics/prometheus/openshift-template.yaml 
+
 * create a prometheus-server _service account_ resource :
 
 ```bash
@@ -76,10 +78,15 @@ oc adm policy add-cluster-role-to-user cluster-reader system:serviceaccount:${NA
 ## grafana connection to prometheus
 
 info : forked from https://github.com/OpenShiftDemos/grafana-openshift
+
 * add the prometheus template to openshift : `oc apply -f openshift-grafana-template.yaml`
 * run a new app based on this template : `oc new-app grafana`
 
-## Todo
+## todo
+
 * expose a route automatically from prometheus template
 * include kafka-manager for high-level monitoring 
 
+## links
+
+* [Kubernetes 1.7 API reference](https://v1-7.docs.kubernetes.io/docs/api-reference/v1.7/) for OpenShift 3.7 Blueprints
